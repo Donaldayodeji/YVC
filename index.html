@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Young Voices Circle Nigeria</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts - Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    /* Apply Inter font to the entire body */
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      /* Prevent horizontal scrollbar issues */
+      background-color: #f8f8f8;
+      /* Off-white background */
+    }
+
+    /* Loading Overlay Styles */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #f8f8f8;
+      /* Match body background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.8s ease-out;
+    }
+
+    #loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+      /* Allow clicks through once hidden */
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      /* Light grey */
+      border-top: 8px solid #28a745;
+      /* Green color for spinner */
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1.5s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Custom CSS for Hero section background animation (Green Gradient) */
+    .hero-bg-gradient {
+      background: linear-gradient(45deg, #218838, #28a745, #3CB371);
+      /* Darker Green, Main Green, Medium Sea Green */
+      background-size: 400% 400%;
+      /* Larger background for animation */
+      animation: gradientAnimation 15s ease infinite;
+      /* Smooth, infinite animation */
+    }
+
+    /* Keyframes for the background gradient animation */
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* --- Scroll Reveal Animations (Varied Styles) --- */
+    .scroll-reveal-base {
+      opacity: 0;
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out, filter 0.8s ease-out;
+      /* Normal transition duration */
+    }
+
+    /* Animation specific transforms */
+    .scroll-reveal-up {
+      transform: translateY(50px);
+    }
+
+    .scroll-reveal-down {
+      transform: translateY(-50px);
+    }
+
+    .scroll-reveal-left {
+      transform: translateX(-50px);
+    }
+
+    .scroll-reveal-right {
+      transform: translateX(50px);
+    }
+
+    .scroll-reveal-zoom {
+      transform: scale(0.8);
+    }
+
+    .scroll-reveal-rotate {
+      transform: rotate(-10deg) scale(0.9);
+      filter: blur(5px);
+    }
+
+    .scroll-reveal-flip-x {
+      transform: perspective(400px) rotateX(90deg);
+    }
+
+    .scroll-reveal-fade {
+      transform: translateY(0);
+      /* No initial transform, just opacity */
+    }
+
+    /* Common visible state for all scroll-reveal types */
+    .scroll-reveal-base.visible {
+      opacity: 1;
+      transform: none;
+      /* Resets to original position/scale */
+      filter: none;
+      /* Remove blur */
+    }
+
+    /* Keyframes for Hero H1: Bounce In */
+    @keyframes bounceIn {
+
+      0%,
+      20%,
+      40%,
+      60%,
+      80%,
+      100% {
+        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+      }
+
+      0% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+      }
+
+      20% {
+        transform: scale3d(1.1, 1.1, 1.1);
+      }
+
+      40% {
+        transform: scale3d(0.9, 0.9, 0.9);
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03);
+      }
+
+      80% {
+        transform: scale3d(0.97, 0.97, 0.97);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    .animate-hero-h1 {
+      animation: bounceIn 1.5s forwards;
+    }
+
+    /* Keyframes for Hero P/Button/Image: Fade In Up */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    .animate-hero-fade-up {
+      animation: fadeInUp 1.2s forwards;
+    }
+
+    /* More granular delays for staggered effects */
+    .delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-400 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-500 {
+      animation-delay: 0.5s;
+    }
+
+    .delay-600 {
+      animation-delay: 0.6s;
+    }
+
+    .delay-700 {
+      animation-delay: 0.7s;
+    }
+
+    .delay-800 {
+      animation-delay: 0.8s;
+    }
+
+    .delay-900 {
+      animation-delay: 0.9s;
+    }
+
+    .delay-1000 {
+      animation-delay: 1.0s;
+    }
+
+    .delay-1100 {
+      animation-delay: 1.1s;
+    }
+
+    .delay-1200 {
+      animation-delay: 1.2s;
+    }
+
+    .delay-1300 {
+      animation-delay: 1.3s;
+    }
+
+    .delay-1400 {
+      animation-delay: 1.4s;
+    }
+
+    .delay-1500 {
+      animation-delay: 1.5s;
+    }
+
+
+    /* Message box styling (for form submission feedback) */
+    .message-box {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745;
+      /* Main Green */
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      opacity: 0;
+      /* Initially hidden */
+      transition: opacity 0.5s ease-in-out;
+      display: none;
+      /* Hidden by default, shown by JS */
+    }
+
+    .message-box.show {
+      opacity: 1;
+      display: block;
+    }
+
+    /* Navbar initial state - no background or shadow */
+    #main-header {
+      background-color: transparent;
+      /* Explicitly transparent initially */
+      box-shadow: none;
+      transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      min-height: 60px;
+      /* Ensure minimum height for header on mobile */
+    }
+
+    /* Navbar scrolled state */
+    #main-header.scrolled {
+      background-color: white;
+      /* Solid white background when scrolled */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow */
+    }
+
+    /* CSS Variables for dynamic colors */
+    :root {
+      --underline-color: white;
+      /* Default for transparent header */
+    }
+
+    /* Transitions for elements that should smoothly change */
+    .nav-link-text {
+      position: relative;
+      /* Needed for ::after positioning */
+      padding-bottom: 5px;
+      /* Space for the underline */
+    }
+
+    .nav-link-text::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      /* Hidden initially */
+      height: 2px;
+      /* Thickness of the underline */
+      background-color: var(--underline-color);
+      /* Use CSS variable */
+      transition: width 0.3s ease-out;
+      /* Animation for sliding in */
+      border-radius: 1px;
+    }
+
+    .nav-link-text:hover::after {
+      width: 100%;
+      /* Expand on hover */
+    }
+
+    /* New rule for the YVCN logo SVG text element */
+    .site-logo-yvcn svg text {
+      transition: fill 0.3s ease-in-out;
+      /* Smooth transition for logo text color */
+    }
+
+    /* Mobile Menu Toggle Icon Animation */
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .menu-icon span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      /* Default white for transparent header */
+      border-radius: 2px;
+      transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+      /* Ensure smooth transition for each span */
+    }
+
+    /* Change menu icon color when header is scrolled */
+    #main-header.scrolled .menu-icon span {
+      background-color: #28a745;
+      /* Green when scrolled */
+    }
+
+    .menu-icon.open span:nth-child(1) {
+      transform: translateY(8.5px) rotate(45deg);
+    }
+
+    .menu-icon.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-icon.open span:nth-child(3) {
+      transform: translateY(-8.5px) rotate(-45deg);
+    }
+
+    /* --- Navbar Responsiveness Logic --- */
+
+    /* Desktop Navigation Links - Hidden by default, shown on medium screens and up */
+    #desktop-nav-links {
+      display: none;
+      /* Hidden on small screens */
+    }
+
+    @media (min-width: 768px) {
+
+      /* md breakpoint */
+      #desktop-nav-links {
+        display: flex !important;
+        /* Show as flex on medium and larger screens */
+      }
+    }
+
+    /* Mobile Menu Button Container - Visible by default, hidden on medium screens and up */
+    #mobile-menu-button-container {
+      display: flex;
+      /* Visible on small screens */
+    }
+
+    @media (min-width: 768px) {
+
+      /* md breakpoint */
+      #mobile-menu-button-container {
+        display: none !important;
+        /* Hide on medium and larger screens */
+      }
+    }
+
+    /* Mobile Menu and Backdrop - Hidden by default, shown by JS on small screens */
+    #mobile-menu,
+    #mobile-menu-backdrop {
+      display: none;
+      /* Hidden by default */
+    }
+
+    @media (max-width: 767px) {
+
+      /* Only apply to small screens */
+      #mobile-menu.active {
+        display: block;
+        /* Show when active on small screens */
+      }
+
+      #mobile-menu-backdrop.show {
+        display: block;
+        /* Show when active on small screens */
+      }
+    }
+
+    /* Mobile Menu Slide-in Animation */
+    #mobile-menu {
+      position: fixed;
+      width: 100%;
+      left: 0;
+      /* `top` will be calculated and set by JS to position it right below the header */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 0 0 1rem 1rem;
+      z-index: 50;
+      /* Ensure it's above other content */
+      transform: translateY(-100%);
+      /* Start off-screen above */
+      transition: transform 0.4s ease-out;
+      max-height: calc(100vh - var(--header-height, 0px));
+      /* Ensure it doesn't go below viewport */
+      overflow-y: auto;
+      /* Allow scrolling if content is too long */
+    }
+
+    #mobile-menu.active {
+      transform: translateY(0);
+      /* Slide into view */
+    }
+
+    /* Mobile Menu Backdrop */
+    #mobile-menu-backdrop {
+      position: fixed;
+      inset: 0;
+      /* top, right, bottom, left to 0 */
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Semi-transparent black */
+      z-index: 40;
+      /* Below the mobile menu, above other content */
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+    }
+
+    #mobile-menu-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Prevent body scroll when mobile menu is open */
+    body.no-scroll {
+      overflow: hidden;
+    }
+
+    /* Back to Top Button */
+    #back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #28a745;
+      /* Main Green */
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out;
+      cursor: pointer;
+      z-index: 900;
+    }
+
+    #back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    #back-to-top:hover {
+      transform: translateY(-5px);
+      background-color: #218838;
+      /* Slightly darker green on hover */
+    }
+
+    /* Ensure smooth scroll for all anchor links */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="text-gray-900">
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Message Box for form feedback -->
+  <div id="messageBox" class="message-box">
+    <p id="messageText"></p>
+  </div>
+
+  <!-- Header Section -->
+  <header id="main-header" class="py-5 px-6 md:px-16 fixed top-0 w-full z-50 rounded-b-lg">
+    <nav class="container mx-auto flex justify-between items-center">
+      <!-- Logo (YVCN SVG) -->
+      <a href="#home" class="site-logo-yvcn block text-white">
+        <svg width="120" height="60" viewBox="0 0 120 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="60" fill="none" />
+          <text x="10" y="40" font-family="Inter, sans-serif" font-size="36" font-weight="800"
+            fill="currentColor">YVCN</text>
+        </svg>
+      </a>
+      <!-- Desktop Navigation Links -->
+      <ul id="desktop-nav-links" class="space-x-10 text-lg">
+        <li><a href="#home" class="nav-link-text text-white font-medium">Home</a></li>
+        <li><a href="#about" class="nav-link-text text-white font-medium">About Us</a></li>
+        <li><a href="#programs" class="nav-link-text text-white font-medium">Our Programs</a></li>
+        <li><a href="#contact" class="nav-link-text text-white font-medium">Contact</a></li>
+      </ul>
+      <!-- Mobile Menu Button -->
+      <!-- Added id="mobile-menu-button-container" for specific CSS targeting -->
+      <div id="mobile-menu-button-container" class="relative z-50 items-center">
+        <button id="menu-button" class="focus:outline-none p-2">
+          <div class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+      </div>
+    </nav>
+    <!-- Mobile Menu Backdrop -->
+    <div id="mobile-menu-backdrop"></div>
+    <!-- Mobile Menu (initially hidden) -->
+    <div id="mobile-menu" class="bg-white">
+      <ul class="flex flex-col space-y-3 p-4 text-lg">
+        <li><a href="#home" class="mobile-nav-link block text-gray-800 hover:bg-[#d4edda] px-4 py-2 rounded-md">Home</a>
+        </li>
+        <li><a href="#about" class="mobile-nav-link block text-gray-800 hover:bg-[#d4edda] px-4 py-2 rounded-md">About
+            Us</a></li>
+        <li><a href="#programs" class="mobile-nav-link block text-gray-800 hover:bg-[#d4edda] px-4 py-2 rounded-md">Our
+            Programs</a></li>
+        <li><a href="#contact"
+            class="mobile-nav-link block text-gray-800 hover:bg-[#d4edda] px-4 py-2 rounded-md">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section - New Narrative -->
+  <section id="home"
+    class="hero-bg-gradient text-white py-32 px-6 md:px-16 flex items-center justify-center min-h-screen-75 text-center rounded-b-3xl shadow-xl relative overflow-hidden">
+    <!-- Decorative elements for background animation -->
+    <div class="absolute inset-0 z-0 opacity-20">
+      <div class="absolute w-48 h-48 bg-white rounded-full -top-10 -left-10 animate-[pulse_5s_infinite_ease-in-out]">
+      </div>
+      <div
+        class="absolute w-64 h-64 bg-white rounded-full -bottom-20 -right-20 animate-[pulse_6s_infinite_ease-in-out_reverse]">
+      </div>
+      <div class="absolute w-32 h-32 bg-white rounded-full top-1/4 left-1/4 animate-[pulse_4s_infinite_ease-in-out]">
+      </div>
+    </div>
+
+    <div class="container mx-auto flex flex-col items-center justify-center z-10">
+      <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 animate-hero-h1 text-shadow-lg">
+        WRITE. REFLECT.<i class="text-black"> RESHAPE</i> THE FUTURE.
+      </h1>
+      <p class="text-xl md:text-2xl mb-10 max-w-3xl opacity-0 animate-hero-fade-up delay-200">
+        We are the voices of tomorrow
+        let us be heard
+      </p>
+      <a href="https://forms.gle/rmprzf5LtJTgXa6S9"
+        class="inline-block bg-white text-[#28a745] hover:bg-[#d4edda] px-10 py-5 rounded-full text-lg font-semibold shadow-lg transform hover:scale-105 transition duration-300 ease-in-out opacity-0 animate-hero-fade-up delay-400">
+   Become a Member
+      </a>
+      <img src="./images/Untitled.png" alt="Youth Leadership Banner"
+        class="mt-16 w-full max-w-2xl rounded-xl shadow-2xl object-cover opacity-0 animate-hero-fade-up delay-600 transform hover:scale-105 transition duration-300 ease-in-out flex">
+    </div>
+  </section>
+
+  <!-- About Us Section - New Narrative with Vision and Mission Cards -->
+  <section id="about" class="py-24 px-6 md:px-16 bg-white rounded-lg shadow-lg mx-4 md:mx-auto max-w-7xl my-20">
+    <div class="container mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center text-[#28a745] mb-16 scroll-reveal-down scroll-reveal-base">
+        About Us</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <!-- Vision Card -->
+        <div
+          class="p-10 bg-[#d4edda] rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out scroll-reveal-fade scroll-reveal-base delay-100">
+          <h3 class="text-3xl md:text-4xl font-semibold text-[#218838] mb-8 flex items-center">
+            <svg class="w-10 h-10 mr-4 text-[#28a745]" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"></path>
+            </svg>
+            Our Vision
+          </h3>
+          <p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
+            To build a generation of confident, creative, and socially aware young Nigerians who are empowered to
+            express themselves, contribute meaningfully to society, and shape the future through their voices and ideas.
+          </p>
+          <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+            We aim to cultivate a generation that is not only heard but also actively shapes policies, innovates
+            solutions, and champions inclusivity, ensuring a prosperous and equitable future for all Nigerians.
+          </p>
+        </div>
+
+        <!-- Mission Card -->
+        <div
+          class="p-10 bg-[#d4edda] rounded-xl shadow-md transform hover:scale-105 transition duration-300 ease-in-out scroll-reveal-fade scroll-reveal-base delay-300">
+          <h3 class="text-3xl md:text-4xl font-semibold text-[#218838] mb-8 flex items-center">
+            <svg class="w-10 h-10 mr-4 text-[#28a745]" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M11 2a1 1 0 00-1 1v1.447l.955.573A8.001 8.001 0 0118 13v1a1 1 0 001 1h1a1 1 0 001-1v-1a10.001 10.001 0 00-9-9.955V3a1 1 0 00-1-1zm-1 16a8 8 0 100-16 8 8 0 000 16z"
+                clip-rule="evenodd"></path>
+            </svg>
+            Our Mission
+          </h3>
+          <p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-4">
+            Young Voices Circle Nigeria exists to provide a vibrant and inclusive platform for students to speak up,
+            share their talents, engage in meaningful dialogue, and work together on ideas and projects that create real
+            impact—within their schools, communities, and the nation at large.
+          </p>
+          <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+            By nurturing these essential competencies, we empower youth to confidently articulate their ideas, challenge
+            the status quo, and lead with integrity, ultimately contributing to a more just, prosperous, and democratic
+            Nigeria.
+          </p>
+        </div>
+      </div>
+      <div class="text-center mt-16 scroll-reveal-up scroll-reveal-base delay-500">
+        <a href="#contact"
+          class="inline-block bg-[#28a745] hover:bg-[#218838] text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+          Join Our Movement
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Programs Section - New Narrative (Tabs/Accordion idea) -->
+  <section id="programs" class="py-24 px-6 md:px-16 bg-gray-100 rounded-lg shadow-lg mx-4 md:mx-auto max-w-7xl my-20">
+    <div class="container mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center text-[#28a745] mb-16 scroll-reveal-up scroll-reveal-base">
+        Our Transformative Programs</h2>
+
+      <div class="flex flex-col md:flex-row gap-8">
+        <!-- Program Navigation (Tabs) -->
+        <div class="md:w-1/4 flex flex-col space-y-4 scroll-reveal-left scroll-reveal-base delay-100">
+          <button
+            class="program-tab bg-white text-[#28a745] font-semibold py-4 px-6 rounded-lg shadow-md hover:bg-[#d4edda] transition duration-300 ease-in-out transform hover:scale-105 active-tab"
+            data-target="public-speaking">Public Speaking</button>
+          <button
+            class="program-tab bg-white text-gray-700 font-semibold py-4 px-6 rounded-lg shadow-md hover:bg-[#d4edda] transition duration-300 ease-in-out transform hover:scale-105"
+            data-target="critical-thinking">Critical Thinking</button>
+          <button
+            class="program-tab bg-white text-gray-700 font-semibold py-4 px-6 rounded-lg shadow-md hover:bg-[#d4edda] transition duration-300 ease-in-out transform hover:scale-105"
+            data-target="leadership-mentorship">Leadership Mentorship</button>
+        </div>
+
+        <!-- Program Content -->
+        <div class="md:w-3/4 bg-white p-10 rounded-xl shadow-lg scroll-reveal-right scroll-reveal-base delay-300">
+          <div id="public-speaking" class="program-content active-content">
+            <h3 class="text-3xl font-semibold text-[#218838] mb-6 flex items-center">
+              <svg class="w-8 h-8 mr-3 text-[#28a745]" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17.5 14.5a3 3 0 11-6 0 3 3 0 016 0zM12 20a8 8 0 008-8h-2a6 6 0 01-6 6v2zM12 4a8 8 0 018 8h2a10 10 0 00-10-10V4zM4 12a8 8 0 008 8v-2a6 6 0 01-6-6H4zM4 12a8 8 0 018-8V2a10 10 0 00-10 10H4z">
+                </path>
+              </svg>
+              Mastering the Art of Public Speaking
+            </h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+              Our dynamic Public Speaking Workshops empower youth to articulate their thoughts with clarity, confidence,
+              and charisma. Through interactive exercises, personalized coaching, and real-world simulations,
+              participants learn to captivate audiences, structure compelling arguments, and deliver impactful
+              presentations. We cover everything from overcoming stage fright to mastering body language and vocal
+              projection.
+            </p>
+            <ul class="list-disc list-inside text-gray-600 text-base md:text-lg space-y-2">
+              <li>Confidence Building & Stage Presence</li>
+              <li>Speech Structuring & Content Development</li>
+              <li>Vocal Variety & Body Language Mastery</li>
+              <li>Audience Engagement Techniques</li>
+            </ul>
+          </div>
+
+          <div id="critical-thinking" class="program-content hidden">
+            <h3 class="text-3xl font-semibold text-[#218838] mb-6 flex items-center">
+              <svg class="w-8 h-8 mr-3 text-[#28a745]" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                <path fill-rule="evenodd"
+                  d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Sharpening Minds: Critical Thinking & Debate
+            </h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+              Our Critical Thinking & Debate Clubs are designed to cultivate analytical prowess and logical reasoning.
+              Participants engage in structured debates, case studies, and problem-solving challenges, learning to
+              dissect complex issues, evaluate information, and construct well-reasoned arguments. This program fosters
+              intellectual curiosity and the ability to engage in constructive discourse.
+            </p>
+            <ul class="list-disc list-inside text-gray-600 text-base md:text-lg space-y-2">
+              <li>Logical Reasoning & Argumentation</li>
+              <li>Problem Solving & Decision Making</li>
+              <li>Information Analysis & Evaluation</li>
+              <li>Constructive Dialogue & Persuasion</li>
+            </ul>
+          </div>
+
+          <div id="leadership-mentorship" class="program-content hidden">
+            <h3 class="text-3xl font-semibold text-[#218838] mb-6 flex items-center">
+              <svg class="w-8 h-8 mr-3 text-[#28a745]" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
+              </svg>
+              Nurturing Future Leaders: Mentorship Program
+            </h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+              Our Leadership Mentorship Program connects aspiring young leaders with seasoned professionals from diverse
+              fields. This personalized program provides invaluable guidance, career insights, and instills ethical
+              leadership principles. Mentees gain practical knowledge, expand their networks, and develop the vision and
+              integrity required to become impactful role models in their communities and beyond.
+            </p>
+            <ul class="list-disc list-inside text-gray-600 text-base md:text-lg space-y-2">
+              <li>Personalized Career Guidance</li>
+              <li>Ethical Leadership Development</li>
+              <li>Networking Opportunities</li>
+              <li>Project Management & Team Building</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-16 scroll-reveal-up scroll-reveal-base delay-700">
+        <a href="#contact"
+          class="inline-block bg-[#28a745] hover:bg-[#218838] text-white px-10 py-5 rounded-full text-xl font-semibold shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+          Get Involved Today
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact/Stats Section - New Narrative -->
+  <section id="impact"
+    class="py-24 px-6 md:px-16 bg-[#218838] text-white rounded-lg shadow-lg mx-4 md:mx-auto max-w-7xl my-20">
+    <div class="container mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-16 scroll-reveal-down scroll-reveal-base">Our Impact at a Glance</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="scroll-reveal-zoom scroll-reveal-base delay-100">
+          <div class="text-6xl font-extrabold text-white mb-4">...+</div>
+          <p class="text-xl md:text-2xl">Kids Empowered Annually</p>
+        </div>
+        <div class="scroll-reveal-zoom scroll-reveal-base delay-300">
+          <div class="text-6xl font-extrabold text-white mb-4">4+</div>
+          <p class="text-xl md:text-2xl">Months of dedicated startup Service</p>
+        </div>
+        <div class="scroll-reveal-zoom scroll-reveal-base delay-500">
+          <div class="text-6xl font-extrabold text-white mb-4">95%</div>
+          <p class="text-xl md:text-2xl">Program Completion Rate</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section - New Narrative (Carousel) -->
+  <section id="testimonials" class="py-24 px-6 md:px-16 bg-white rounded-lg shadow-lg mx-4 md:mx-auto max-w-7xl my-20">
+    <div class="container mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-[#28a745] mb-16 scroll-reveal-down scroll-reveal-base">Voices of
+        Change: What Our Participants Say</h2>
+      <div class="relative w-full max-w-4xl mx-auto overflow-hidden">
+        <div id="testimonial-carousel" class="flex transition-transform duration-700 ease-in-out">
+          <!-- Testimonial 1 -->
+          <div
+            class="w-full flex-shrink-0 p-8 bg-[#d4edda] rounded-xl shadow-md text-center scroll-reveal-flip-x scroll-reveal-base delay-100">
+            <img src="https://placehold.co/80x80/28a745/ffffff?text=AB" alt="Aisha Bello"
+              class="rounded-full w-20 h-20 mx-auto mb-6 object-cover border-4 border-white shadow-md">
+            <p class="text-lg text-gray-700 italic mb-6">"Young Voices Circle Nigeria transformed my public speaking. I
+              now feel confident and articulate when addressing any audience. Truly life-changing!"</p>
+            <p class="font-semibold text-[#218838]">- Aisha Bello, Participant</p>
+          </div>
+          <!-- Testimonial 2 -->
+          <div
+            class="w-full flex-shrink-0 p-8 bg-[#d4edda] rounded-xl shadow-md text-center scroll-reveal-flip-x scroll-reveal-base delay-300">
+            <img src="https://placehold.co/80x80/28a745/ffffff?text=EO" alt="Emeka Okoro"
+              class="rounded-full w-20 h-20 mx-auto mb-6 object-cover border-4 border-white shadow-md">
+            <p class="text-lg text-gray-700 italic mb-6">"The critical thinking workshops pushed me to analyze issues
+              from multiple perspectives. It's an invaluable skill for any aspiring leader."</p>
+            <p class="font-semibold text-[#218838]">- Emeka Okoro, Participant</p>
+          </div>
+          <!-- Testimonial 3 -->
+          <div
+            class="w-full flex-shrink-0 p-8 bg-[#d4edda] rounded-xl shadow-md text-center scroll-reveal-flip-x scroll-reveal-base delay-500">
+            <img src="https://placehold.co/80x80/28a745/ffffff?text=FA" alt="Fajemidupe Adebola"
+              class="rounded-full w-20 h-20 mx-auto mb-6 object-cover border-4 border-white shadow-md">
+            <p class="text-lg text-gray-700 italic mb-6">"Being mentored by a seasoned professional through YVCN has
+              opened so many doors. Their guidance is truly empowering."</p>
+            <p class="font-semibold text-[#28a745]">- Fajemidupe Adebola, Mentor</p>
+          </div>
+        </div>
+        <!-- Carousel Navigation -->
+        <button id="prev-testimonial"
+          class="absolute top-1/2 left-0 -translate-y-1/2 bg-[#28a745] text-white p-3 rounded-full shadow-lg hover:bg-[#218838] transition duration-300 ease-in-out transform hover:scale-110">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button id="next-testimonial"
+          class="absolute top-1/2 right-0 -translate-y-1/2 bg-[#28a745] text-white p-3 rounded-full shadow-lg hover:bg-[#218838] transition duration-300 ease-in-out transform hover:scale-110">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="text-center mt-16 scroll-reveal-up scroll-reveal-base delay-700">
+        <a href="#contact"
+          class="inline-block bg-[#28a745] hover:bg-[#218838] text-white px-10 py-5 rounded-full text-xl font-semibold shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+          Share Your Story
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section - New Narrative with Form and Map -->
+  <section id="contact" class="py-24 px-6 md:px-16 bg-gray-100 rounded-lg shadow-lg mx-4 md:mx-auto max-w-7xl my-20">
+    <div class="container mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center text-[#28a745] mb-16 scroll-reveal-down scroll-reveal-base">
+        Get in Touch with YVCN</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <!-- Contact Form -->
+        <div class="bg-white p-10 rounded-xl shadow-lg scroll-reveal-left scroll-reveal-base delay-100">
+          <h3 class="text-3xl font-semibold text-[#218838] mb-8">Send Us a Message</h3>
+          <form id="contactForm" class="space-y-6">
+            <div>
+              <label for="name" class="block text-gray-700 text-lg font-medium mb-2">Your Name</label>
+              <input type="text" id="name" name="name"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-transparent text-lg"
+                placeholder="John Doe" required>
+            </div>
+            <div>
+              <label for="email" class="block text-gray-700 text-lg font-medium mb-2">Your Email</label>
+              <input type="email" id="email" name="email"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-transparent text-lg"
+                placeholder="johndoe@example.com" required>
+            </div>
+            <div>
+              <label for="subject" class="block text-gray-700 text-lg font-medium mb-2">Subject</label>
+              <input type="text" id="subject" name="subject"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-transparent text-lg"
+                placeholder="Inquiry about programs">
+            </div>
+            <div>
+              <label for="message" class="block text-gray-700 text-lg font-medium mb-2">Your Message</label>
+              <textarea id="message" name="message" rows="6"
+                class="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#28a745] focus:border-transparent text-lg"
+                placeholder="Tell us how we can help you..." required></textarea>
+            </div>
+            <a href="https://forms.gle/rmprzf5LtJTgXa6S9" target="_blank"
+              style="display: inline-block; padding: 12px 24px; background-color: #008000; color: white; text-decoration: none; font-size: 16px; border-radius: 8px; border: none; font-family: Arial, sans-serif;">
+              Fill Out the Google Form
+            </a>
+
+
+          </form>
+        </div>
+
+        <!-- Contact Info & Map -->
+        <div
+          class="bg-white p-10 rounded-xl shadow-lg flex flex-col justify-between scroll-reveal-right scroll-reveal-base delay-300">
+          <div>
+            <h3 class="text-3xl font-semibold text-[#218838] mb-8">Reach Out Directly</h3>
+            <div class="space-y-6 text-lg text-gray-700">
+              <p class="flex items-center"><svg class="w-6 h-6 mr-3 text-[#28a745]" fill="currentColor"
+                  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                    clip-rule="evenodd"></path>
+                </svg> Okuta Elerinla, Akure, Ondo State</p>
+              <p class="flex items-center"><svg class="w-6 h-6 mr-3 text-[#28a745]" fill="currentColor"
+                  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.774a11.058 11.058 0 000 4.292l1.548.774a1 1 0 01.54 1.06l-.74 4.435A1 1 0 015.153 18H3a1 1 0 01-1-1V3z">
+                  </path>
+                </svg> <a href="tel:+2348012345678" class="hover:underline">+234 8060238182</a></p>
+              <p class="flex items-center"><svg class="w-6 h-6 mr-3 text-[#28a745]" fill="currentColor"
+                  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                </svg> <a href="mailto:info@yvcnigeria.org" class="hover:underline">yvcnigeria@gmail.com</a></p>
+            </div> <br><br>
+            <div class="container">
+  <i style="font-size: 25px ;" >In collaboration with Dinamico Consulting</i>
+</div>
+          </div>
+          <!-- Google Map Placeholder -->
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="bg-[#28a745] text-white py-12 px-6 md:px-16 text-center">
+    <div class="container mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+        <!-- Logo -->
+        <a href="#home" class="site-logo-yvcn block text-white mb-4 md:mb-0">
+          <svg width="80" height="40" viewBox="0 0 80 40" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <rect width="80" height="40" fill="none" />
+            <text x="5" y="30" font-family="Inter, sans-serif" font-size="28" font-weight="800"
+              fill="currentColor">YVCN</text>
+          </svg>
+        </a>
+        <!-- Footer Navigation -->
+        <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4 text-lg mb-4 md:mb-0">
+          <li><a href="#home" class="hover:underline">Home</a></li>
+          <li><a href="#about" class="hover:underline">About Us</a></li>
+          <li><a href="#programs" class="hover:underline">Our Programs</a></li>
+          <li><a href="#contact" class="hover:underline">Contact</a></li>
+          <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+        </ul>
+        <!-- Social Media Icons (placeholders) -->
+        <div class="flex space-x-4">
+          <a href="#" class="text-white hover:text-gray-300 transition duration-300"><img
+              src="https://placehold.co/24x24/ffffff/000000?text=FB" alt="Facebook" class="w-6 h-6"></a>
+          <a href="#" class="text-white hover:text-gray-300 transition duration-300"><img
+              src="https://placehold.co/24x24/ffffff/000000?text=TW" alt="Twitter" class="w-6 h-6"></a>
+          <a href="#" class="text-white hover:text-gray-300 transition duration-300"><img
+              src="https://placehold.co/24x24/ffffff/000000?text=IG" alt="Instagram" class="w-6 h-6"></a>
+        </div>
+      </div>
+      <div class="border-t border-white border-opacity-30 pt-8 text-sm">
+        <p>&copy; 2025 Young Voices Circle Nigeria. All rights reserved.</p>
+        <p>Designed by <span class="text-red-400">&hearts;</span> by [Donald Fajemidupe]</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" aria-label="Back to top">
+    &uarr;
+  </button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loadingOverlay = document.getElementById('loading-overlay');
+      const mainHeader = document.getElementById('main-header');
+      const desktopNavLinks = document.getElementById('desktop-nav-links').querySelectorAll('.nav-link-text');
+      const siteLogo = document.querySelector('.site-logo-yvcn svg text');
+      const menuButton = document.getElementById('menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+      const menuIconSpans = document.querySelectorAll('.menu-icon span');
+      const root = document.documentElement; // Get the root element for CSS variables
+
+      // --- Loading Overlay ---
+      window.addEventListener('load', () => {
+        loadingOverlay.classList.add('hidden');
+        document.body.style.overflowY = 'auto'; // Re-enable scroll after loading
+      });
+
+      // --- Header Scroll Effect ---
+      const updateHeaderStyle = () => {
+        if (window.scrollY > 50) {
+          mainHeader.classList.add('scrolled'); // Add 'scrolled' class for background and shadow
+          desktopNavLinks.forEach(link => link.classList.remove('text-white'));
+          desktopNavLinks.forEach(link => link.classList.add('text-gray-800'));
+          siteLogo.setAttribute('fill', '#28a745'); // Change logo text to green
+          root.style.setProperty('--underline-color', '#28a745'); // Change underline to green
+        } else {
+          mainHeader.classList.remove('scrolled'); // Remove 'scrolled' class
+          desktopNavLinks.forEach(link => link.classList.remove('text-gray-800'));
+          desktopNavLinks.forEach(link => link.classList.add('text-white'));
+          siteLogo.setAttribute('fill', 'currentColor'); // Revert logo text to white (from currentColor class on parent)
+          root.style.setProperty('--underline-color', 'white'); // Revert underline to white
+        }
+      };
+
+      window.addEventListener('scroll', updateHeaderStyle);
+      updateHeaderStyle(); // Call on load to set initial state
+
+
+      // --- Mobile Menu Toggle ---
+      const toggleMobileMenu = () => {
+        const headerHeight = mainHeader.offsetHeight;
+        mobileMenu.style.top = `${headerHeight}px`; // Position menu below header
+
+        mobileMenu.classList.toggle('active');
+        mobileMenuBackdrop.classList.toggle('show');
+        menuButton.querySelector('.menu-icon').classList.toggle('open');
+        document.body.classList.toggle('no-scroll');
+      };
+
+      menuButton.addEventListener('click', toggleMobileMenu);
+      mobileMenuBackdrop.addEventListener('click', toggleMobileMenu); // Close when clicking backdrop
+
+      // Close mobile menu when a link is clicked
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (mobileMenu.classList.contains('active')) {
+            toggleMobileMenu();
+          }
+        });
+      });
+
+      // --- Program Tabs/Accordion (New in this version) ---
+      const programTabs = document.querySelectorAll('.program-tab');
+      const programContents = document.querySelectorAll('.program-content');
+
+      programTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove active styles from all tabs and hide all content
+          programTabs.forEach(t => {
+            t.classList.remove('active-tab', 'bg-[#28a745]', 'text-white');
+            t.classList.add('bg-white', 'text-gray-700');
+          });
+          programContents.forEach(content => content.classList.add('hidden'));
+
+          // Add active styles to clicked tab
+          tab.classList.add('active-tab', 'bg-[#28a745]', 'text-white');
+          tab.classList.remove('bg-white', 'text-gray-700');
+
+          // Show corresponding content
+          const targetId = tab.dataset.target;
+          document.getElementById(targetId).classList.remove('hidden');
+        });
+      });
+
+      // --- Testimonial Carousel ---
+      let currentTestimonial = 0;
+      const testimonials = document.querySelectorAll('#testimonial-carousel > div');
+      const totalTestimonials = testimonials.length;
+      const testimonialCarousel = document.getElementById('testimonial-carousel');
+
+      const showTestimonial = (index) => {
+        if (index >= totalTestimonials) {
+          currentTestimonial = 0;
+        } else if (index < 0) {
+          currentTestimonial = totalTestimonials - 1;
+        } else {
+          currentTestimonial = index;
+        }
+        testimonialCarousel.style.transform = `translateX(-${currentTestimonial * 100}%)`;
+      };
+
+      document.getElementById('prev-testimonial').addEventListener('click', () => {
+        showTestimonial(currentTestimonial - 1);
+      });
+
+      document.getElementById('next-testimonial').addEventListener('click', () => {
+        showTestimonial(currentTestimonial + 1);
+      });
+
+      // Auto-advance carousel
+      setInterval(() => {
+        showTestimonial(currentTestimonial + 1);
+      }, 7000); // Change testimonial every 7 seconds
+
+      // --- Form Submission (Placeholder) ---
+      const contactForm = document.getElementById('contactForm');
+      const messageBox = document.getElementById('messageBox');
+      const messageText = document.getElementById('messageText');
+
+      contactForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent actual form submission
+
+        // Simulate form submission
+        messageText.textContent = 'Thank you for your message! We will get back to you soon.';
+        messageBox.classList.add('show');
+
+        // Hide message after 5 seconds
+        setTimeout(() => {
+          messageBox.classList.remove('show');
+        }, 5000);
+
+        contactForm.reset(); // Clear the form
+      });
+
+      // --- Scroll Reveal Animation ---
+      const scrollRevealElements = document.querySelectorAll('.scroll-reveal-base');
+
+      const observerOptions = {
+        root: null, // viewport
+        rootMargin: '0px',
+        threshold: 0.15 // 15% of element visible to trigger
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target); // Stop observing once visible
+          }
+        });
+      }, observerOptions);
+
+      scrollRevealElements.forEach(el => {
+        observer.observe(el);
+      });
+
+      // --- Back to Top Button ---
+      const backToTopButton = document.getElementById('back-to-top');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) { // Show button after scrolling down 300px
+          backToTopButton.classList.add('show');
+        } else {
+          backToTopButton.classList.remove('show');
+        }
+      });
+
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
